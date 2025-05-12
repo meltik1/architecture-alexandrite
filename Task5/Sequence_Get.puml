@@ -1,0 +1,20 @@
+@startuml
+!theme C4_united from https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/themes
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+=== Получение заказов ==
+
+Container(MES, "MES", "C#")
+Container(cache, "Cache", "Redis")
+Container(db, "DB", "Postgres")
+
+
+Rel(MES, cache, "Получить orders с ID")
+
+alt Cache hit
+    Rel(cache, MES, "Вернуть orders")
+else cache miss
+    Rel(MES, db, "Получить orders из базы")
+    Rel(MES, cache, "Положить orders в НЕТЕРМИНАЛЬНОМ статусе в кэш")
+end
+SHOW_LEGEND()
+@enduml

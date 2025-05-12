@@ -1,0 +1,15 @@
+@startuml
+!theme C4_united from https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/themes
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+=== Обновление статуса заказа ==
+
+Container(MES, "MES", "C#")
+Container(cache, "Cache", "Redis")
+Container(db, "DB", "Postgres")
+
+
+Rel(MES, db, "Обновить статус заказов")
+Rel(MES, cache, "Инвалидировать кэш по ID заказа")
+
+SHOW_LEGEND()
+@enduml
